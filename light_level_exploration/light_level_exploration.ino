@@ -58,15 +58,21 @@ void loop() {
   float g_norm = (float)g / c; 
   float b_norm = (float)b / c;
 
-  if (c > 0) {
-      Serial.print(r_norm, 4); Serial.print(",");
-      Serial.print(g_norm, 4); Serial.print(",");
-      Serial.print(b_norm, 4);Serial.print(",");
-      Serial.print(c, 4);
-      Serial.println();
-  } else {
-       Serial.println("c=0"); // Indicate very low light state
-  }
+if (c > 0) {
+    // Normalizing r, g, b values by c (clear light)
+    // Significance: Normalization removes the influence of overall light intensity.
+    // This allows us to focus on the color ratios, which are more stable
+    // regardless of how bright or dim the light source is.
+    // For example, a pure red object will have a similar r_norm/g_norm/b_norm ratio
+    // whether illuminated by a bright or dim light.
+    Serial.print("Normalized R: "); Serial.print(r_norm, 4); Serial.print(", ");
+    Serial.print("Normalized G: "); Serial.print(g_norm, 4); Serial.print(", ");
+    Serial.print("Normalized B: "); Serial.print(b_norm, 4); Serial.print(", ");
+    Serial.print("Clear (C) value: "); Serial.print(c, 4);
+    Serial.println();
+} else {
+    Serial.println("c=0 - Very low light state, normalization not meaningful."); // Indicate very low light state
+}
 
 
   // --- Determine the current light state based on c ---
